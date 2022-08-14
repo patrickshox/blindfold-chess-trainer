@@ -13,6 +13,13 @@ body {
   background-color: rgb(81, 80, 77);
 }
 
+#container {
+  height: 100vh;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 #game {
   padding: 50px;
   display: inline-block;
@@ -21,8 +28,8 @@ body {
 
 /* Board Styles */
 .square {
-  width: min(90px, 10vw, 10vh);
-  height: min(90px, 10vw, 10vh);
+  width: min(90px, 12vw, 12vh);
+  height: min(90px, 12vw, 12vh);
   background-color: var(--white-color);
   position: relative;
   border: none;
@@ -92,10 +99,23 @@ body {
   display: inline-block;
   height: 100%;
   background-color: white;
-  height: calc(8 * min(90px, 10vw, 10vh));
-  width: 350px;
+  height:95vh;
+  width: calc(95vw - 9 * min(90px, 12vw, 12vh));
   vertical-align: middle;
   overflow-y: scroll;
+  border-radius: 5px;
+  margin-top: 1%;
+  margin-left: 1%;
+}
+
+@media screen and (max-width: 1200px) {
+
+  #container {
+    width: calc(8 * min(90px, 12vw, 12vh) + 101px);
+  }
+  .sidebar {
+    width: 100%;
+  }
 }
 
 #sidebar-header {
@@ -141,6 +161,13 @@ li.incorrect:before {
   content: "❌";
   position: absolute;
   bottom: 20px;
+}
+
+.slider {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 90%;
 }
 
 button#start {
