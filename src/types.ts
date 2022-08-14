@@ -1,3 +1,5 @@
+type Side = "white" | "black"
+
 interface SquareProps {
     row: number,
     col: number,
@@ -6,7 +8,7 @@ interface SquareProps {
 
 interface BoardProps {
     onSelection: (c: [number, number]) => void,
-    perspective: "white" | "black"
+    perspective: Side
 }
 
 interface GameState {
@@ -16,7 +18,7 @@ interface GameState {
     prompt: [number, number] | null,
     history: History,
     roundLength: number,
-    perspective: "white" | "black"
+    perspective: Side
 }
 
 interface ControlsProps {
@@ -24,7 +26,9 @@ interface ControlsProps {
     secondsLeft: number | null,
     history: History,
     roundLength: number,
-    roundLengthChanged: (n: number) => void
+    perspective: Side,
+    roundLengthChanged: (n: number) => void,
+    sideChanged: (s: Side) => void,
 }
 
 interface PromptProps {
@@ -38,4 +42,4 @@ interface Result {
 
 type History = Result[]
 
-export type { SquareProps, GameState, ControlsProps, PromptProps, BoardProps, Result, History }
+export type { SquareProps, GameState, ControlsProps, PromptProps, BoardProps, Result, History, Side }

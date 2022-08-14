@@ -1,7 +1,7 @@
 import React from 'react';
 import {createRoot} from "react-dom/client"
 import './index.css';
-import { SquareProps, GameState, ControlsProps, PromptProps, BoardProps, Result, History } from './types.js';
+import { SquareProps, GameState, ControlsProps, PromptProps, BoardProps, Result, History, Side } from './types.js';
 
 class Square extends React.Component<SquareProps, {}> {
 
@@ -74,10 +74,37 @@ class Controls extends React.Component<ControlsProps, {}> {
     return(
       <div className='sidebar'>
         <h1 id="sidebar-header"> Chess Vision Trainer </h1>
-        <div id="timer">{this.props.secondsLeft}</div>
-        <input type="range" min="10" max="60" className="slider" id="myRange" value = {this.props.roundLength} step="5" onChange={(e) => this.props.roundLengthChanged(parseInt(e.target.value))}></input>
-        <ul id = "streak"> {history} </ul>
-        <button id="start" onClick = {this.props.startGame}>Start a {this.props.roundLength}s round!</button>
+        <div id="sidebar-content">
+
+          <div id="timer">{this.props.secondsLeft}</div>
+
+          <ul id = "streak"> {history} </ul>
+          
+          <div>Round Length:</div>
+          <input 
+            type="range"
+            min="10" max="60"
+            className="slider"
+            id="myRange"
+            value = {this.props.roundLength} 
+            step="5" 
+            onChange={(e) => this.props.roundLengthChanged(parseInt(e.target.value))} 
+          />
+          <hr />
+
+          <div>Perspective:</div>
+          <input 
+            type="checkbox"
+            name = "perspective"
+            checked = {this.props.perspective == "black"}
+            id="perspective"
+            onChange={(e) => {console.log(e); this.props.sideChanged(e.target.checked ? "black" : "white")}}
+          />
+          <label htmlFor="perspective">View as black</label>
+          <hr />
+
+          <button id="start" onClick = {this.props.startGame}>Start a {this.props.roundLength}s round!</button>
+        </div>
       </div>
     )
   }
@@ -176,6 +203,13 @@ class Game extends React.Component<{}, GameState> {
     })
   }
 
+  changePerspective = (s: Side) => {
+    console.log(s)
+    this.setState({
+      perspective: s
+    })
+  }
+
   render() {
     return (
       <div id = "container">
@@ -183,7 +217,15 @@ class Game extends React.Component<{}, GameState> {
           <Board onSelection={this.selectionMade} perspective = {this.state.perspective} />
           <Prompt prompt = {this.state.prompt} />
         </div>
-        <Controls startGame={this.startGame} secondsLeft={this.state.secondsLeft} history={this.state.history} roundLength = {this.state.roundLength} roundLengthChanged = {this.roundLengthChanged} />
+        <Controls 
+          startGame={this.startGame}
+          secondsLeft={this.state.secondsLeft}
+          history={this.state.history} 
+          roundLength = {this.state.roundLength} 
+          roundLengthChanged = {this.roundLengthChanged}
+          perspective = {this.state.perspective}
+          sideChanged = {this.changePerspective}
+        />
       </div>
     )
   }

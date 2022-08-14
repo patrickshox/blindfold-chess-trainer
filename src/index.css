@@ -108,6 +108,12 @@ body {
   margin-left: 1%;
 }
 
+#sidebar-content {
+  width: 90%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 @media screen and (max-width: 1200px) {
 
   #container {
@@ -167,14 +173,14 @@ li.incorrect:before {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 90%;
+  width: 100%;
 }
 
 button#start {
   display: block;
   margin-left: auto;
   margin-right: auto;
-  width: 90%;
+  width: 100%;
   background-color: var(--black-color);
   padding: 15px;
   border-radius: 5px;
