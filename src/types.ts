@@ -1,13 +1,19 @@
 type Side = "white" | "black"
 
+type SelectionGrade = "correct" | "incorrect" | "missed"
+
+interface SquareState {
+    grade: SelectionGrade | null
+}
+
 interface SquareProps {
     row: number,
     col: number,
-    onSelection: (c: [number, number]) => void
+    onSelection: (c: [number, number]) => SelectionGrade | null
 }
 
 interface BoardProps {
-    onSelection: (c: [number, number]) => void,
+    onSelection: (c: [number, number]) =>  SelectionGrade | null,
     perspective: Side
 }
 
@@ -18,7 +24,8 @@ interface GameState {
     prompt: [number, number] | null,
     history: History,
     roundLength: number,
-    perspective: Side
+    perspective: Side,
+    record: Record
 }
 
 interface ControlsProps {
@@ -29,10 +36,20 @@ interface ControlsProps {
     perspective: Side,
     roundLengthChanged: (n: number) => void,
     sideChanged: (s: Side) => void,
+    isPlaying: boolean,
+    record: Record
+}
+
+interface AnalyticsProps {
+    record: Record
 }
 
 interface PromptProps {
     prompt: [number, number] | null
+}
+
+interface PromptState {
+    showing: boolean
 }
 
 interface Result {
@@ -42,4 +59,6 @@ interface Result {
 
 type History = Result[]
 
-export type { SquareProps, GameState, ControlsProps, PromptProps, BoardProps, Result, History, Side }
+type Record = History[]
+
+export type { SquareProps, SquareState, SelectionGrade, GameState, ControlsProps, PromptProps, PromptState, BoardProps, Result, History, Side, Record, AnalyticsProps }
