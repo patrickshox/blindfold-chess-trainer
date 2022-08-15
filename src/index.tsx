@@ -170,7 +170,7 @@ class Analytics extends React.Component<AnalyticsProps, {}> {
       return {gameNumber: i, score: getScoreFromHistory(game), history: this.props.record[i].map(obj => obj.correct)}
     })
 
-    let maxScore = Math.max(...previousScores.map(s => s.score))
+    let maxScore = previousScores.length ? Math.max(...previousScores.map(s => s.score)) : 0
 
     console.log(previousScores)
 
