@@ -120,13 +120,14 @@ class Controls extends React.Component<ControlsProps, {}> {
             <div id="timer">{this.props.secondsLeft}</div>
             <ul id = "streak" data-display-none = {!this.props.isPlaying}> {history} </ul>
           </div>
-          <Analytics record={this.props.record} />
+          <div data-display-none = {this.props.isPlaying} > 
+            <Analytics record={this.props.record} />
+          </div>
         </div>
         <div id="controls-container" data-display-none = {this.props.isPlaying}>
           <div id="controls-inner-container">
             <div >Round Length: {this.props.roundLength}</div>
             <input 
-              data-display-none = {this.props.isPlaying}
               type="range"
               min="10" max="60"
               className="slider"
@@ -136,21 +137,19 @@ class Controls extends React.Component<ControlsProps, {}> {
               onChange={(e) => this.props.roundLengthChanged(parseInt(e.target.value))} 
             />
 
-            <div data-display-none = {this.props.isPlaying}>Perspective:</div>
+            <div>Perspective:</div>
             <input 
               type="checkbox"
               name = "perspective"
               checked = {this.props.perspective == "black"}
               id="perspective"
               onChange={(e) => {this.props.sideChanged(e.target.checked ? "black" : "white")}}
-              data-display-none = {this.props.isPlaying}
             />
             <label htmlFor="perspective" data-display-none = {this.props.isPlaying}>View as black</label>
             <div id="button-background-3d">
               <button 
                 id="start"
                 onClick = {this.props.startGame}
-                data-display-none = {this.props.isPlaying}
               >Start!</button>
             </div>
           </div>
