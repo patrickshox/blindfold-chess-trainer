@@ -2,7 +2,7 @@ import React from 'react';
 import {createRoot} from "react-dom/client"
 import './index.css';
 import { SquareProps, SquareState, SelectionGrade, GameState, ControlsProps, PromptProps, BoardProps, Result, History, Side, PromptState, Record, AnalyticsProps } from './types.js';
-import { ResponsiveContainer, AreaChart, XAxis, YAxis, Area, CartesianGrid } from "recharts"
+import { ResponsiveContainer, AreaChart, XAxis, YAxis, Area, CartesianGrid, Label } from "recharts"
 import { count } from 'console';
 
 class Square extends React.Component<SquareProps, SquareState> {
@@ -87,17 +87,9 @@ class Prompt extends React.Component<PromptProps, PromptState> {
     }
   }
 
-  squareName = (coords: [number, number] | null): [string, number] | string => {
-    if (!coords) {
-      return ""
-    } else {
-      return numberToLetter(coords[0]) + coords[1].toString()
-    }
-  }
-
   render() {
     return (
-      <div id = "prompt" className = {this.state.showing ? "showing" : "hiding"}> {this.squareName(this.props.prompt)} </div>
+      <div id = "prompt" className = {this.state.showing ? "showing" : "hiding"}> {squareName(this.props.prompt)} </div>
     )
   }
 }
@@ -115,10 +107,11 @@ class Controls extends React.Component<ControlsProps, {}> {
     return(
       <div className='sidebar'>
         <h1 id="sidebar-header"> Chess Vision Trainer </h1>
-        <div id="sidebar-content">
-          <div id="game-fact-container">
+        <div id="sidebar-content" data-controls-hidden = {this.props.isPlaying}>
+          <div id="game-fact-container" data-display-none = {!this.props.isPlaying}>
             <div id="timer">{this.props.secondsLeft}</div>
-            <ul id = "streak" data-display-none = {!this.props.isPlaying}> {history} </ul>
+            <div id="task-description">Find {squareToName(this.props.prompt)}</div>
+            <ul id = "streak"> {history} </ul>
           </div>
           <div data-display-none = {this.props.isPlaying} > 
             <Analytics record={this.props.record} />
@@ -176,23 +169,34 @@ class Analytics extends React.Component<AnalyticsProps, {}> {
     return (
       <div style = {{width: "90%", margin: "auto"}}>
         <h1>High Score: {maxScore} </h1>
-        <hr />
-        <h1>Previous Scores</h1>
-        <ResponsiveContainer height={200} width = "100%">
-        <AreaChart data = {previousScores}>
-          <defs>
-            <linearGradient id = "color" x1="0" y1 = "0" x2 = "0" y2="1">
-              <stop offset="0%" stopColor = "rgb(244, 170, 61)" stopOpacity = {0.7}></stop>
-              <stop offset="75%" stopColor = "rgb(244, 170, 61)" stopOpacity = {0.05}></stop>
-            </linearGradient>
-          </defs>
+        <div data-display-none = {previousScores.length < 1}>
+          <h1>Previous Scores:</h1>
+          <ResponsiveContainer height={200} width = "100%">
+          <AreaChart data = {previousScores}>
+            <defs>
+              <linearGradient id = "color" x1="0" y1 = "0" x2 = "0" y2="1">
+                <stop offset="0%" stopColor = "rgb(244, 170, 61)" stopOpacity = {0.7}></stop>
+                <stop offset="75%" stopColor = "rgb(244, 170, 61)" stopOpacity = {0.2}></stop>
+              </linearGradient>
+            </defs>
 
 
-          <Area dataKey="score" stroke = "rgb(244, 170, 61)" fill="url(#color)"></Area>
-          <YAxis dataKey = "score" />
-          <CartesianGrid vertical = {false} />
-        </AreaChart>
-        </ResponsiveContainer>
+            <Area dataKey="score" stroke = "rgb(244, 170, 61)" fill="url(#color)"></Area>
+            <YAxis dataKey = "score">
+            <Label
+              style={{
+                textAnchor: "middle",
+                fontSize: "110%",
+                fill: "black",
+              }}
+              angle={270} 
+              value={"Score"}
+              position='insideLeft'/>
+            </ YAxis>
+            <CartesianGrid vertical = {false} />
+          </AreaChart>
+          </ResponsiveContainer>
+        </div>
       </div>
     )
   }
@@ -333,9 +337,11 @@ class Game extends React.Component<{}, GameState> {
   render() {
     return (
       <div id = "container">
-        <div id="game">
-          <Board onSelection={this.processSelection} perspective = {this.state.perspective} />
-          <Prompt prompt = {this.state.prompt} />
+        <div id="game-container">
+          <div id="game">
+            <Board onSelection={this.processSelection} perspective = {this.state.perspective} />
+            <Prompt prompt = {this.state.prompt} />
+          </div>
         </div>
         <Controls 
           startGame={this.startGame}
@@ -347,6 +353,7 @@ class Game extends React.Component<{}, GameState> {
           sideChanged = {this.changePerspective}
           isPlaying = {this.state.isPlaying}
           record = {this.state.record}
+          prompt = {this.state.prompt}
         />
       </div>
     )
@@ -377,4 +384,12 @@ function squareToName(square: [number, number] | null): string {
 function getScoreFromHistory(h: History): number {
   let score = h.filter(p => p.correct).length
   return score
+}
+
+function squareName(coords: [number, number] | null): [string, number] | string {
+  if (!coords) {
+    return ""
+  } else {
+    return numberToLetter(coords[0]) + coords[1].toString()
+  }
 }

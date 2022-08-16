@@ -37,11 +37,12 @@ interface ControlsProps {
     roundLengthChanged: (n: number) => void,
     sideChanged: (s: Side) => void,
     isPlaying: boolean,
-    record: Record
+    record: Record,
+    prompt: [number, number] | null
 }
 
 interface AnalyticsProps {
-    record: Record
+    record: Record,
 }
 
 interface PromptProps {

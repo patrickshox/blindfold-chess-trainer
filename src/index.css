@@ -17,6 +17,7 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: var(--background-ui-color);
+  user-select: none;
 }
 
 #container {
@@ -128,13 +129,37 @@ body {
 @media screen and (max-width: 1200px) {
 
   #container {
-    width: calc(8 * min(90px, 12vw, 12vh) + 101px);
+    width: 90%;
   }
+
+  .square {
+    width: calc(min(12.5vw, 12.5vh) * .9);
+    height: calc(min(12.5vw, 12.5vh) * .9)
+  }
+
   .sidebar {
     width: 100%;
     /* height: calc(auto); */
     min-height: 300px;
   }
+
+  #game-container {
+    display: block !important;
+    width: max-content;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  #game {
+    padding: 0px;
+
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+#game-container {
+  display: inline-block;
 }
 
 #sidebar-header {
@@ -152,11 +177,15 @@ body {
   text-align: center;
 }
 
-#timer {
+#timer, #task-description {
   width: 100%;
   font-size: 50px;
   padding: 15px 0px;
   text-align: center;
+}
+
+#task-description {
+  font-size: 30px;
 }
 
 #streak {
@@ -181,6 +210,11 @@ body {
 #sidebar-content {
   height: calc(100% - 330px);
   overflow-y: scroll;
+}
+
+/* expand sidebar content when controls are hidden (while playing)*/
+#sidebar-content[data-controls-hidden = "true"]  {
+  height: 100%;
 }
 
 #controls-inner-container {
