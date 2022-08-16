@@ -1,5 +1,5 @@
 # Chess Vision Trainer
-Improve your ability to visualize squares on a chess board using this mini game. Read the prompt, and select that square to gain points.
+Improve your ability to visualize squares on a chess board using this mini game. Read the prompt, and select that square to gain points. [Play now!](https://patrickshox.github.io/blindfold-chess-trainer)
 
 ![game demo](resources/demo.gif)
 
