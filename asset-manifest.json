@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "/blindfold-chess-trainer/static/css/main.d3f248ea.css",
-    "main.js": "/blindfold-chess-trainer/static/js/main.afc77e29.js",
+    "main.css": "/blindfold-chess-trainer/static/css/main.1ef83bd7.css",
+    "main.js": "/blindfold-chess-trainer/static/js/main.c55e7583.js",
     "index.html": "/blindfold-chess-trainer/index.html",
-    "main.d3f248ea.css.map": "/blindfold-chess-trainer/static/css/main.d3f248ea.css.map",
-    "main.afc77e29.js.map": "/blindfold-chess-trainer/static/js/main.afc77e29.js.map"
+    "main.1ef83bd7.css.map": "/blindfold-chess-trainer/static/css/main.1ef83bd7.css.map",
+    "main.c55e7583.js.map": "/blindfold-chess-trainer/static/js/main.c55e7583.js.map"
   },
   "entrypoints": [
-    "static/css/main.d3f248ea.css",
-    "static/js/main.afc77e29.js"
+    "static/css/main.1ef83bd7.css",
+    "static/js/main.c55e7583.js"
   ]
 }
