@@ -124,6 +124,7 @@ body {
   margin-top: 1%;
   margin-left: 1%;
   position: relative;
+  box-shadow: 3px 4px 31px -5px rgba(0, 0, 0, 0.69);
 }
 
 @media screen and (max-width: 1200px) {
@@ -141,6 +142,10 @@ body {
     width: 100%;
     /* height: calc(auto); */
     min-height: 300px;
+  }
+
+  #board {
+    box-shadow: 3px 4px 31px -5px rgba(0, 0, 0, 0.69)
   }
 
   #game-container {
@@ -175,6 +180,7 @@ body {
   height: var(--sidebar-header-height);
   line-height: var(--sidebar-header-height);
   text-align: center;
+  box-shadow: 0 0 8px -1px rgba(0, 0, 0, 0.64);
 }
 
 #timer, #task-description {
@@ -205,6 +211,7 @@ body {
   left: 0;
   right: 0;
   background-color: rgb(235, 235, 235);
+  box-shadow: 0 11px 30px -5px black;
 }
 
 #sidebar-content {
@@ -260,14 +267,14 @@ li.incorrect:before {
   background-color: var(--primary-ui-color); /* Fully shown on mouse-over */
 }
 
+button {
+  cursor: pointer;
+}
+
 button#start, div#button-background-3d {
   display: block;
   width: 100%;
   border-radius: 7px;
-}
-
-button#start:hover {
-  background-blend-mode: darken;
 }
 
 button#start {
@@ -288,6 +295,10 @@ div#button-background-3d {
 
 button#start:active {
   transform: translateY(0px)
+}
+
+button#start:hover {
+  background-color: rgb(242, 166, 51);
 }
 
 [data-display-none = "true"] {

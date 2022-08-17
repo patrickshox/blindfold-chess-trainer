@@ -3,7 +3,7 @@ import {createRoot} from "react-dom/client"
 import './index.css';
 import { SquareProps, SquareState, SelectionGrade, GameState, ControlsProps, PromptProps, BoardProps, Result, History, Side, PromptState, Record, AnalyticsProps } from './types.js';
 import { ResponsiveContainer, AreaChart, XAxis, YAxis, Area, CartesianGrid, Label } from "recharts"
-import { count } from 'console';
+import JSConfetti from 'js-confetti'
 
 class Square extends React.Component<SquareProps, SquareState> {
 
@@ -170,7 +170,7 @@ class Analytics extends React.Component<AnalyticsProps, {}> {
       <div style = {{width: "90%", margin: "auto"}}>
         <h1>High Score: {maxScore} </h1>
         <div data-display-none = {previousScores.length < 1}>
-          <h1>Previous Scores:</h1>
+          <h2>Previous Scores:</h2>
           <ResponsiveContainer height={200} width = "100%">
           <AreaChart data = {previousScores}>
             <defs>
@@ -205,7 +205,6 @@ class Analytics extends React.Component<AnalyticsProps, {}> {
 
 class Game extends React.Component<{}, GameState> {
 
-
   constructor(props: any) {
 
     if (!localStorage.getItem("perspective")) {
@@ -230,6 +229,7 @@ class Game extends React.Component<{}, GameState> {
   }
 
   startGame = () => {
+
     if (this.state.isPlaying) {
       return
     }
@@ -262,6 +262,19 @@ class Game extends React.Component<{}, GameState> {
   endGame = () => {
     let i = this.state.intervalId
     var r: Record = this.state.record.slice()
+
+    let currentScore = getScoreFromHistory(this.state.history)
+    let maxScore = Math.max(...r.map(h => getScoreFromHistory(h)))
+
+    if (currentScore > maxScore) {
+      const jsConfetti = new JSConfetti()
+      jsConfetti.addConfetti({
+        emojis: ['♟', '♛', '♜', '♟', '♝', '♚'],
+        emojiSize: 100,
+        confettiNumber: 50,
+      })
+    }
+
     r.push(this.state.history)
 
     if (i) {
@@ -278,8 +291,6 @@ class Game extends React.Component<{}, GameState> {
     })
 
     localStorage.setItem("record", JSON.stringify(r))
-
-    console.log(r)
   }
 
   processSelection = (selection: [number, number]): SelectionGrade | null => {
